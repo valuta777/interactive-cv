@@ -14,6 +14,8 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 
+import { aboutMe } from 'data/aboutMe';
+
 type ContactFormInputs = {
   name: string;
   email: string;
@@ -55,17 +57,17 @@ export const Contact: React.FC = () => {
         sx={{ maxWidth: 400 }}
       >
         <Tooltip title="Email">
-          <IconButton component="a" href="mailto:you@example.com">
+          <IconButton component="a" href={`mailto:${aboutMe.email}`}>
             <EmailIcon fontSize={isMobile ? 'medium' : 'large'} />
           </IconButton>
         </Tooltip>
         <Tooltip title="LinkedIn">
-          <IconButton component="a" href="https://linkedin.com" target="_blank">
+          <IconButton component="a" href={aboutMe.linkedin} target="_blank">
             <LinkedInIcon fontSize={isMobile ? 'medium' : 'large'} />
           </IconButton>
         </Tooltip>
         <Tooltip title="GitHub">
-          <IconButton component="a" href="https://github.com" target="_blank">
+          <IconButton component="a" href={aboutMe.github} target="_blank">
             <GitHubIcon fontSize={isMobile ? 'medium' : 'large'} />
           </IconButton>
         </Tooltip>

@@ -9,6 +9,7 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import EmailIcon from '@mui/icons-material/Email';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import { aboutMe } from 'data/aboutMe';
 
 export const ProfileHeader: React.FC = () => {
   const theme = useTheme();
@@ -26,24 +27,24 @@ export const ProfileHeader: React.FC = () => {
         sx={{ width: isMobile ? 80 : 120, height: isMobile ? 80 : 120 }}
       />
       <Typography variant={isMobile ? 'h5' : 'h4'} fontWeight={700}>
-        Your Name
+        {aboutMe.name}
       </Typography>
       <Typography variant={isMobile ? 'body2' : 'h6'} color="text.secondary">
-        Software Engineer | Web Developer
+        {aboutMe.title}
       </Typography>
       <Stack direction="row" spacing={isMobile ? 1 : 2}>
         <Tooltip title="LinkedIn">
-          <IconButton component="a" href="https://linkedin.com" target="_blank">
+          <IconButton component="a" href={aboutMe.linkedin} target="_blank">
             <LinkedInIcon fontSize={isMobile ? 'medium' : 'large'} />
           </IconButton>
         </Tooltip>
         <Tooltip title="GitHub">
-          <IconButton component="a" href="https://github.com" target="_blank">
+          <IconButton component="a" href={aboutMe.github} target="_blank">
             <GitHubIcon fontSize={isMobile ? 'medium' : 'large'} />
           </IconButton>
         </Tooltip>
         <Tooltip title="Email">
-          <IconButton component="a" href="mailto:you@example.com">
+          <IconButton component="a" href={`mailto:${aboutMe.email}`}>
             <EmailIcon fontSize={isMobile ? 'medium' : 'large'} />
           </IconButton>
         </Tooltip>

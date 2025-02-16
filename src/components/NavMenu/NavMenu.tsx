@@ -14,6 +14,7 @@ import ListItemText from '@mui/material/ListItemText';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { Link } from 'react-scroll';
+import { ThemeSwitcher } from 'components/ThemeSwitcher/ThemeSwitcher';
 
 export const NavMenu: React.FC = () => {
   const theme = useTheme();
@@ -24,22 +25,28 @@ export const NavMenu: React.FC = () => {
     { label: 'About', to: 'about' },
     { label: 'Experience', to: 'experience' },
     { label: 'Skills', to: 'skills' },
-    { label: 'Projects', to: 'projects' },
+    // { label: 'Projects', to: 'projects' },
     { label: 'Contact', to: 'contact' },
   ];
 
   return (
     <AppBar
       position="sticky"
-      elevation={4}
-      sx={{ backdropFilter: 'blur(8px)', bgcolor: 'rgba(0, 0, 0, 0.7)' }}
+      elevation={3}
+      sx={{
+        backdropFilter: 'blur(8px)',
+        backgroundColor: 'rgba(0, 0, 0, 0.7)',
+      }}
     >
-      <Toolbar>
-        <Typography variant="h6" sx={{ flexGrow: 1 }}>
-          Interactive CV
-        </Typography>
+      <Toolbar
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          gap: 1,
+        }}
+      >
+        <Typography variant="h6">Interactive CV</Typography>
 
-        {/* Mobile Menu: Hamburger Icon */}
         {isMobile ? (
           <>
             <IconButton
@@ -50,7 +57,6 @@ export const NavMenu: React.FC = () => {
               <MenuIcon />
             </IconButton>
 
-            {/* Swipeable Drawer for Mobile */}
             <SwipeableDrawer
               anchor="right"
               open={drawerOpen}
@@ -64,7 +70,7 @@ export const NavMenu: React.FC = () => {
                       component={Link}
                       to={item.to}
                       smooth
-                      duration={800}
+                      duration={300}
                       onClick={() => setDrawerOpen(false)}
                     >
                       <ListItemText primary={item.label} />
@@ -84,13 +90,16 @@ export const NavMenu: React.FC = () => {
                 component={Link}
                 to={item.to}
                 smooth
-                duration={800}
+                duration={300}
               >
                 {item.label}
               </Button>
             ))}
           </Stack>
         )}
+        <Stack direction="row" spacing={2}>
+          <ThemeSwitcher />
+        </Stack>
       </Toolbar>
     </AppBar>
   );

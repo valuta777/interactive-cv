@@ -1,73 +1,104 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import IconButton from '@mui/material/IconButton';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import Collapse from '@mui/material/Collapse';
+import {
+  Timeline,
+  TimelineItem,
+  TimelineSeparator,
+  TimelineConnector,
+  TimelineContent,
+  TimelineDot,
+} from '@mui/lab';
 import { motion } from 'framer-motion';
-
-const experiences = [
-  {
-    id: 1,
-    title: 'Software Engineer',
-    company: 'TechCorp',
-    date: '2020 - Present',
-    description: 'Developing scalable web applications.',
-  },
-  {
-    id: 2,
-    title: 'Frontend Developer',
-    company: 'WebSolutions',
-    date: '2018 - 2020',
-    description: 'Built responsive UI with React and Material-UI.',
-  },
-];
+import { TechItem } from 'components/TechItem/TechIcon.tsx';
+import { experiences } from 'data/experiences';
+import { ExpandableResponsibilities } from 'components/ExpandableResponsibilities/ExpandableResponsibilities.tsx';
+import KeyboardArrowUp from '@mui/icons-material/KeyboardArrowUp';
+import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
 
 export const Experience: React.FC = () => {
-  const [expanded, setExpanded] = useState<{ [key: number]: boolean }>({});
+  const formatDate = (date: Date | null) => {
+    if (!date) return 'Present';
+    return date.toLocaleString('en-US', { month: 'short', year: 'numeric' });
+  };
+
+  const [showAll, setShowAll] = useState(false);
+
+  const visibleExperiences = useMemo(
+    () => (showAll ? experiences : experiences.slice(0, 4)),
+    [showAll]
+  );
 
   return (
-    <Stack spacing={3} alignItems="center">
-      <Typography variant="h4" fontWeight={700}>
-        Experience
-      </Typography>
-      {experiences.map((exp, index) => (
-        <motion.div
-          key={exp.id}
-          initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, ease: 'easeOut' }}
-        >
-          <Card sx={{ maxWidth: 600, width: '100%' }}>
-            <CardContent>
-              <Typography variant="h6" fontWeight={600}>
-                {exp.title}
-              </Typography>
-              <Typography variant="subtitle1" color="text.secondary">
-                {exp.company} • {exp.date}
-              </Typography>
-            </CardContent>
-            <CardActions disableSpacing>
-              <IconButton
-                onClick={() =>
-                  setExpanded((prev) => ({ ...prev, [exp.id]: !prev[exp.id] }))
-                }
+    <Stack spacing={2} alignItems="center">
+      <Typography variant="h4">Work Experience</Typography>
+      <Timeline position="alternate">
+        {visibleExperiences.map((exp, index) => (
+          <TimelineItem key={index}>
+            <TimelineSeparator>
+              <TimelineDot color="primary" />
+              {index < experiences.length - 1 && <TimelineConnector />}
+            </TimelineSeparator>
+            <TimelineContent>
+              <Stack
+                gap={1}
+                component={motion.div}
+                key={exp.role}
+                whileHover={{
+                  x: index % 2 === 0 ? 10 : -10,
+                  transition: { type: 'spring', stiffness: 100 },
+                }}
               >
-                <ExpandMoreIcon />
-              </IconButton>
-            </CardActions>
-            <Collapse in={expanded[exp.id]} timeout="auto" unmountOnExit>
-              <CardContent>
-                <Typography variant="body2">{exp.description}</Typography>
-              </CardContent>
-            </Collapse>
-          </Card>
-        </motion.div>
-      ))}
+                <Typography variant="h6">{exp.role}</Typography>
+                <Typography variant="body2" color="textSecondary">
+                  {exp.company} • {formatDate(exp.startDate)} -{' '}
+                  {formatDate(exp.endDate)}
+                </Typography>
+                <Typography variant="body2" mt={1}>
+                  {exp.description}
+                </Typography>
+                {/* Expandable Responsibilities */}
+                {exp.responsibilities && exp.responsibilities.length > 0 && (
+                  <ExpandableResponsibilities
+                    position={index % 2 === 0 ? 'left' : 'right'}
+                    responsibilities={exp.responsibilities}
+                  />
+                )}
+                <Stack
+                  direction="row"
+                  spacing={1}
+                  mt={1}
+                  justifyContent={index % 2 === 0 ? 'flex-start' : 'flex-end'}
+                >
+                  {exp.tech?.map((tech, idx) => (
+                    <TechItem
+                      key={idx}
+                      icon={tech.icon}
+                      name={tech.name}
+                      experience={tech.experience}
+                      proficiency={tech.proficiency}
+                      timeSpent={tech.timeSpent}
+                    />
+                  ))}
+                </Stack>
+              </Stack>
+            </TimelineContent>
+          </TimelineItem>
+        ))}
+      </Timeline>
+      {experiences.length > 4 && (
+        <Tooltip title={showAll ? 'Show less' : 'Show more'} arrow>
+          <IconButton size={'large'} onClick={() => setShowAll(!showAll)}>
+            {showAll ? (
+              <KeyboardArrowUp width={50} />
+            ) : (
+              <KeyboardArrowDown width={50} />
+            )}
+          </IconButton>
+        </Tooltip>
+      )}
     </Stack>
   );
 };

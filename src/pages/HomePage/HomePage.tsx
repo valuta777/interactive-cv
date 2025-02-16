@@ -1,13 +1,12 @@
 import React from 'react';
 import Stack from '@mui/material/Stack';
-import { ProfileHeader } from '../../components/ProfileHeader/ProfileHeader';
-import { AboutMe } from '../../components/AboutMe/AboutMe';
-import { Experience } from '../../components/Experience/Experience';
-import { Skills } from '../../components/Skills/Skills';
-import { Projects } from '../../components/Projects/Projects';
-import { Contact } from '../../components/Contact/Contact';
-import { AnimatedSection } from '../../components/AnimatedSection/AnimatedSection';
-import { FloatingContactButton } from '../../components/FloatingContactButton/FloatingContactButton';
+import { ProfileHeader } from 'components/ProfileHeader/ProfileHeader.tsx';
+import { AboutMe } from 'components/AboutMe/AboutMe.tsx';
+import { Experience } from 'components/Experience/Experience.tsx';
+import { Skills } from 'components/Skills/Skills.tsx';
+import { Contact } from 'components/Contact/Contact.tsx';
+import { AnimatedSection } from 'components/AnimatedSection/AnimatedSection.tsx';
+import { FloatingContactButton } from 'components/FloatingContactButton/FloatingContactButton.tsx';
 
 export const HomePage: React.FC = () => (
   <>
@@ -28,11 +27,11 @@ export const HomePage: React.FC = () => (
           <Skills />
         </div>
       </AnimatedSection>
-      <AnimatedSection>
-        <div id="projects">
-          <Projects />
-        </div>
-      </AnimatedSection>
+      {/*<AnimatedSection>*/}
+      {/*  <div id="projects">*/}
+      {/*    <Projects />*/}
+      {/*  </div>*/}
+      {/*</AnimatedSection>*/}
       <AnimatedSection>
         <div id="contact">
           <Contact />

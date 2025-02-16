@@ -9,6 +9,7 @@ import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
 import CodeIcon from '@mui/icons-material/Code';
 import { motion } from 'framer-motion';
+import Box from '@mui/material/Box';
 
 const projects = [
   {
@@ -45,7 +46,8 @@ export const Projects: React.FC = () => (
       sx={{ width: '100%', maxWidth: 900 }}
     >
       {projects.map((project) => (
-        <motion.div
+        <Box
+          component={motion.div}
           key={project.id}
           whileHover={{
             scale: 1.05,
@@ -77,7 +79,7 @@ export const Projects: React.FC = () => (
               </Button>
             </CardActions>
           </Card>
-        </motion.div>
+        </Box>
       ))}
     </Masonry>
   </Stack>

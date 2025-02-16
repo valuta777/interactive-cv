@@ -32,6 +32,8 @@
       "providers/*": ["src/providers/*"],
       "theme/*": ["src/theme/*"],
       "config/*": ["src/config/*"],
+      "assets/*": ["src/assets/*"],
+      "data/*": ["src/data/*"]
     }
   },
   "include": ["src"]
