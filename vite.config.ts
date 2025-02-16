@@ -16,7 +16,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: 'index.html',
-        preload: 'preload.js', // Ensure preload.ts is included
+        preload: 'preload.ts', // Ensure preload.ts is included
       },
     },
   },
