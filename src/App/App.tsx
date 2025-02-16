@@ -16,7 +16,7 @@ export const App: React.FC = () => (
       <GlobalStyles />
       <ScrollVisibility />
       <ParticlesBackground />
-      <BrowserRouter>
+      <BrowserRouter basename="/interactive-cv">
         <Router />
       </BrowserRouter>
     </ThemeProvider>
