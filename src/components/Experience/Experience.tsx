@@ -9,20 +9,23 @@ import {
   TimelineContent,
   TimelineDot,
 } from '@mui/lab';
-import { motion } from 'framer-motion';
-import { TechItem } from 'components/TechItem/TechIcon.tsx';
 import { experiences } from 'data/experiences';
-import { ExpandableResponsibilities } from 'components/ExpandableResponsibilities/ExpandableResponsibilities.tsx';
 import KeyboardArrowUp from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
+import Masonry from '@mui/lab/Masonry';
+import { motion } from 'framer-motion';
+import Box from '@mui/material/Box';
+import { ExperienceItem } from 'components/ExperienceItem/ExperienceItem.tsx';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
 
 export const Experience: React.FC = () => {
-  const formatDate = (date: Date | null) => {
-    if (!date) return 'Present';
-    return date.toLocaleString('en-US', { month: 'short', year: 'numeric' });
-  };
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const [showAll, setShowAll] = useState(false);
 
@@ -34,60 +37,45 @@ export const Experience: React.FC = () => {
   return (
     <Stack spacing={2} alignItems="center">
       <Typography variant="h4">Work Experience</Typography>
+      {isMobile && (
+        <Masonry
+          columns={{ xs: 1, sm: 2, md: 3 }}
+          spacing={2}
+          sx={{ width: '100%', maxWidth: 900 }}
+        >
+          {visibleExperiences.map((experience, index) => (
+            <Box
+              component={motion.div}
+              key={experience.role}
+              whileHover={{
+                scale: 1.05,
+                boxShadow: '0px 5px 20px rgba(0, 0, 0, 0.3)',
+              }}
+              transition={{ type: 'spring', stiffness: 300 }}
+            >
+              <Card sx={{ padding: 2 }}>
+                <CardContent>
+                  <ExperienceItem experience={experience} index={index} />
+                </CardContent>
+              </Card>
+            </Box>
+          ))}
+        </Masonry>
+      )}
       <Timeline position="alternate">
-        {visibleExperiences.map((exp, index) => (
+        {visibleExperiences.map((experience, index) => (
           <TimelineItem key={index}>
             <TimelineSeparator>
               <TimelineDot color="primary" />
               {index < experiences.length - 1 && <TimelineConnector />}
             </TimelineSeparator>
             <TimelineContent>
-              <Stack
-                gap={1}
-                component={motion.div}
-                key={exp.role}
-                whileHover={{
-                  x: index % 2 === 0 ? 10 : -10,
-                  transition: { type: 'spring', stiffness: 100 },
-                }}
-              >
-                <Typography variant="h6">{exp.role}</Typography>
-                <Typography variant="body2" color="textSecondary">
-                  {exp.company} • {formatDate(exp.startDate)} -{' '}
-                  {formatDate(exp.endDate)}
-                </Typography>
-                <Typography variant="body2" mt={1}>
-                  {exp.description}
-                </Typography>
-                {/* Expandable Responsibilities */}
-                {exp.responsibilities && exp.responsibilities.length > 0 && (
-                  <ExpandableResponsibilities
-                    position={index % 2 === 0 ? 'left' : 'right'}
-                    responsibilities={exp.responsibilities}
-                  />
-                )}
-                <Stack
-                  direction="row"
-                  spacing={1}
-                  mt={1}
-                  justifyContent={index % 2 === 0 ? 'flex-start' : 'flex-end'}
-                >
-                  {exp.tech?.map((tech, idx) => (
-                    <TechItem
-                      key={idx}
-                      icon={tech.icon}
-                      name={tech.name}
-                      experience={tech.experience}
-                      proficiency={tech.proficiency}
-                      timeSpent={tech.timeSpent}
-                    />
-                  ))}
-                </Stack>
-              </Stack>
+              <ExperienceItem experience={experience} index={index} />
             </TimelineContent>
           </TimelineItem>
         ))}
       </Timeline>
+
       {experiences.length > 4 && (
         <Tooltip title={showAll ? 'Show less' : 'Show more'} arrow>
           <IconButton size={'large'} onClick={() => setShowAll(!showAll)}>
