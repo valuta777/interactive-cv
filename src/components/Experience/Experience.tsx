@@ -8,6 +8,7 @@ import {
   TimelineConnector,
   TimelineContent,
   TimelineDot,
+  timelineItemClasses,
 } from '@mui/lab';
 import { experiences } from 'data/experiences';
 import KeyboardArrowUp from '@mui/icons-material/KeyboardArrowUp';
@@ -16,12 +17,7 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
-import Masonry from '@mui/lab/Masonry';
-import { motion } from 'framer-motion';
-import Box from '@mui/material/Box';
 import { ExperienceItem } from 'components/ExperienceItem/ExperienceItem.tsx';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
 
 export const Experience: React.FC = () => {
   const theme = useTheme();
@@ -37,32 +33,19 @@ export const Experience: React.FC = () => {
   return (
     <Stack spacing={2} alignItems="center">
       <Typography variant="h4">Work Experience</Typography>
-      {isMobile && (
-        <Masonry
-          columns={{ xs: 1, sm: 2, md: 3 }}
-          spacing={2}
-          sx={{ width: '100%', maxWidth: 900 }}
-        >
-          {visibleExperiences.map((experience, index) => (
-            <Box
-              component={motion.div}
-              key={experience.role}
-              whileHover={{
-                scale: 1.05,
-                boxShadow: '0px 5px 20px rgba(0, 0, 0, 0.3)',
-              }}
-              transition={{ type: 'spring', stiffness: 300 }}
-            >
-              <Card sx={{ padding: 2 }}>
-                <CardContent>
-                  <ExperienceItem experience={experience} index={index} />
-                </CardContent>
-              </Card>
-            </Box>
-          ))}
-        </Masonry>
-      )}
-      <Timeline position="alternate">
+      <Timeline
+        position={isMobile ? 'right' : 'alternate'}
+        sx={
+          isMobile
+            ? {
+                [`& .${timelineItemClasses.root}:before`]: {
+                  flex: 0,
+                  padding: 0,
+                },
+              }
+            : {}
+        }
+      >
         {visibleExperiences.map((experience, index) => (
           <TimelineItem key={index}>
             <TimelineSeparator>

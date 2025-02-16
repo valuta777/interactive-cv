@@ -23,7 +23,7 @@ export const ProfileHeader: React.FC = () => {
     >
       <Avatar
         alt={aboutMe.name}
-        src="./src/assets/images/profile.jpg"
+        src={aboutMe.avatar}
         sx={{ width: isMobile ? 100 : 150, height: isMobile ? 100 : 150 }}
       />
       <Typography variant={isMobile ? 'h5' : 'h4'} fontWeight={700}>

@@ -5,6 +5,8 @@ import { motion } from 'framer-motion';
 import { ExpandableResponsibilities } from 'components/ExpandableResponsibilities/ExpandableResponsibilities.tsx';
 import Stack from '@mui/material/Stack';
 import { TechItem } from 'components/TechItem/TechIcon.tsx';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 interface Props {
   experience: Experience;
@@ -17,13 +19,18 @@ export const ExperienceItem: React.FC<Props> = ({ experience, index }) => {
     return date.toLocaleString('en-US', { month: 'short', year: 'numeric' });
   };
 
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
+  const isLeft = index % 2 === 0 || isMobile;
+
   return (
     <Stack
       gap={1}
       component={motion.div}
       key={experience.role}
       whileHover={{
-        x: index % 2 === 0 ? 10 : -10,
+        x: isLeft ? 10 : -10,
         transition: { type: 'spring', stiffness: 100 },
       }}
     >
@@ -39,7 +46,7 @@ export const ExperienceItem: React.FC<Props> = ({ experience, index }) => {
       {experience.responsibilities &&
         experience.responsibilities.length > 0 && (
           <ExpandableResponsibilities
-            position={index % 2 === 0 ? 'left' : 'right'}
+            position={isLeft ? 'left' : 'right'}
             responsibilities={experience.responsibilities}
           />
         )}
@@ -47,7 +54,8 @@ export const ExperienceItem: React.FC<Props> = ({ experience, index }) => {
         direction="row"
         spacing={1}
         mt={1}
-        justifyContent={index % 2 === 0 ? 'flex-start' : 'flex-end'}
+        flexWrap={isLeft ? 'wrap' : 'nowrap'}
+        justifyContent={isLeft ? 'flex-start' : 'center'}
       >
         {experience.tech?.map((tech, idx) => (
           <TechItem

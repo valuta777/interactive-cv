@@ -13,6 +13,7 @@ export default defineConfig({
     }),
   ],
   build: {
+    assetsInlineLimit: 10240, // Converts images under 10KB to base64
     rollupOptions: {
       input: {
         main: 'index.html',
@@ -20,6 +21,7 @@ export default defineConfig({
       },
     },
   },
+  assetsInclude: ['**/*.jpg', '**/*.jpeg'], // Ensure JPGs are processed
   resolve: {
     alias: {
       hooks: path.resolve(__dirname, 'src/hooks'),
