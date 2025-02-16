@@ -1,0 +1,55 @@
+# Ignore Node.js dependencies
+node_modules/
+dist/
+.vite/
+
+# Ignore environment variables
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+
+# Ignore IDE and editor settings
+.idea/
+.vscode/
+*.swp
+*.swo
+*.bak
+*.tmp
+
+# Ignore logs and debugging files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+turbo-debug.log*
+
+# Ignore build artifacts
+build/
+out/
+*.cache
+.cache-loader/
+
+# Ignore TypeScript build output
+*.tsbuildinfo
+
+# Ignore test coverage reports
+coverage/
+
+# Ignore lock files (if using a specific package manager, uncomment the one you don't use)
+package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
+
+# Ignore MacOS system files
+.DS_Store
+
+# Ignore Linux system files
+*.pid
+*.seed
+*.log
+
+# Ignore Windows system files
+Thumbs.db
