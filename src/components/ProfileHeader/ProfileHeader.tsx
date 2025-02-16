@@ -22,9 +22,9 @@ export const ProfileHeader: React.FC = () => {
       sx={{ textAlign: 'center', px: isMobile ? 2 : 0 }}
     >
       <Avatar
-        alt="Your Name"
-        src="/profile.jpg"
-        sx={{ width: isMobile ? 80 : 120, height: isMobile ? 80 : 120 }}
+        alt={aboutMe.name}
+        src="./src/assets/images/profile.jpg"
+        sx={{ width: isMobile ? 100 : 150, height: isMobile ? 100 : 150 }}
       />
       <Typography variant={isMobile ? 'h5' : 'h4'} fontWeight={700}>
         {aboutMe.name}
