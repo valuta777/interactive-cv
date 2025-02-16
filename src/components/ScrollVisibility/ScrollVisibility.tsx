@@ -10,7 +10,7 @@ export const ScrollVisibility = () => {
     `;
     document.head.appendChild(scrollbarStyle);
 
-    let timeout: number;
+    let timeout: NodeJS.Timeout;
 
     const showScrollbar = () => {
       scrollbarStyle.innerHTML = `

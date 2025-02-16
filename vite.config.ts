@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 
 export default defineConfig({
+  base: '/interactive-cv/', // Replace with your GitHub repo name
   plugins: [react()],
   resolve: {
     alias: {
@@ -23,5 +24,4 @@ export default defineConfig({
       ),
     },
   },
-  base: '/your-repo-name/', // Replace with your GitHub repo name
 });
